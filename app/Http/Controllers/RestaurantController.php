@@ -1,0 +1,47 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\Restaurant;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Http\Request;
+
+class RestaurantController extends Controller
+{
+    //
+    public function displayform(){
+
+        return view('userlocation');
+    }
+    
+    public function getNearestRestaurants(Request $request)
+    {
+        // Get the user's current latitude and longitude
+        $latitude = 8.5414095;
+        $longitude = 39.2687893;
+//         $latitude =$request->input('latitude');
+//         $longitude = $request->input('longitude');
+// dd($longitude);
+        $radius=3611;
+        $restaurants = Restaurant::selectRaw("id, name, address, latitude, longitude,
+                     ( 3956 * acos( cos( radians(?) ) *
+                       cos( radians( latitude ) )
+                       * cos( radians( longitude ) - radians(?)
+                       ) + sin( radians(?) ) *
+                       sin( radians( latitude ) ) )
+                     ) AS distance", [$latitude, $longitude, $latitude])
+        ->having("distance", "<", $radius)
+        ->orderBy("distance",'asc')
+        ->offset(0)
+        ->limit(20)
+        ->get();
+        
+        // Retrieve the nearest restaurants
+        // $restaurants = Restaurant::select(DB::raw('*, ( 6371 * acos( cos( radians(40.6591158) ) * cos( radians( latitude ) ) * cos( radians( longitude ) - radians(-73.7841042,14) ) + sin( radians(40.6591158) ) * sin( radians( latitude ) ) ) ) AS distance'))
+        //     ->having('distance','<',1)
+        //     ->orderBy('distance','asc')
+        //     ->get();
+        // Return the nearest restaurants view with the restaurants variable
+        return view('nearest-restaurants',compact('restaurants'));
+    }
+}

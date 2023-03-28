@@ -17,8 +17,12 @@ class RestaurantController extends Controller
     public function getNearestRestaurants(Request $request)
     {
         // Get the user's current latitude and longitude
-        $latitude = 8.5414095;
-        $longitude = 39.2687893;
+        $latitude=Auth()->user()->latitude;
+        $longitude=Auth()->user()->latitude;
+        
+        
+        // $latitude = 8.5414095;
+        // $longitude = 39.2687893;
 //         $latitude =$request->input('latitude');
 //         $longitude = $request->input('longitude');
 // dd($longitude);

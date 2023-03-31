@@ -21,8 +21,9 @@ Route::get('/', function () {
 
 Auth::routes();
 
+Route::middleware(['auth','throttle:3,1'])->group(function(){
+    Route::get('add_resturant',[RestaurantController::class,'create'])->name('addresturant');
+    Route::post('store_resturant',[RestaurantController::class,'addresturant'])->name('store_resturant');
+    Route::get('/restaurants/nearby', [RestaurantController::class, 'getNearestRestaurants'])->name('restaurants.nearby');
+});
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::get('add_resturant',[RestaurantController::class,'create'])->name('addresturant');
-Route::post('store_resturant',[RestaurantController::class,'addresturant'])->name('store_resturant');
-
-Route::get('/restaurants/nearby', [RestaurantController::class, 'getNearestRestaurants'])->name('restaurants.nearby');

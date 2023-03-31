@@ -9,9 +9,29 @@ use Illuminate\Http\Request;
 class RestaurantController extends Controller
 {
     //
-    public function displayform(){
+    public function create(){
 
-        return view('userlocation');
+        return view('addrestaurant');
+    }
+    
+    
+    public function addresturant(Request $request){
+        $this->validate($request,[
+            'name'=>'required',
+            'address'=>'required',
+            'latitude'=>'required',
+            'longitude'=>'required'
+        ]);
+        
+        $restaurant=new Restaurant();
+        $restaurant->name=$request->input('name');
+        $restaurant->address=$request->input('address');
+        $restaurant->latitude=$request->input('latitude');
+        $restaurant->longitude=$request->input('longitude');
+        $restaurant->save();
+        
+        
+        return redirect('/restaurants/nearby')->with('message','Resturant Add Successfully!!');
     }
     
     public function getNearestRestaurants(Request $request)

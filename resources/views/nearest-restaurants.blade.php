@@ -1,9 +1,16 @@
 @extends('layouts.app')
 
 @section('content')
-
+@if(session()->has('message'))'
+  <div class="alert alert-success alert-dismissible fade show">
+    <strong>Success!</strong> {{ session()->get('message') }}
+    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+</div>
+@endif
 <div class="container">
     <h1>Nearest Restaurants</h1>
+    <a href="{{ url('add_resturant') }}" class=" btn btn-warning 
+    ">Add Resturant</a>
 
 @if(count($restaurants) > 0)
 @foreach($restaurants as $restaurant)
@@ -21,32 +28,5 @@
     <p>No restaurants found.</p>
 @endif
 </div>
-<h1>Save User Location</h1>
-
-<form method="POST" action="">
-    @csrf
-    <div>
-        <label for="latitude">Latitude</label>
-        <input type="text" disabled name="latitude" id="latitude">
-    </div>
-    <div>
-        <label for="longitude">Longitude</label>
-        <input type="text" disabled name="longitude" id="longitude">
-    </div>
-    <button type="submit">Save Location</button>
-</form>
-
-<script>
-    if ("geolocation" in navigator) {
-        navigator.geolocation.getCurrentPosition(function(position) {
-            document.getElementById("latitude").value = position.coords.latitude;
-            document.getElementById("longitude").value = position.coords.longitude;
-        }, function(error) {
-            console.log(error);
-        });
-    } else {
-        console.log("Geolocation is not supported by this browser.");
-    }
-</script>
 
 @endsection

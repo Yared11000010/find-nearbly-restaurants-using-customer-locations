@@ -22,5 +22,7 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::get('displayform',[RestaurantController::class,'displayform'])->name('display-form');
+Route::get('add_resturant',[RestaurantController::class,'create'])->name('addresturant');
+Route::post('store_resturant',[RestaurantController::class,'addresturant'])->name('store_resturant');
+
 Route::get('/restaurants/nearby', [RestaurantController::class, 'getNearestRestaurants'])->name('restaurants.nearby');

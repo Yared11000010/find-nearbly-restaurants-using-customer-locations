@@ -8,6 +8,7 @@
                 <div class="card-header">{{ __('Dashboard') }}
                 <a href="{{ url('restaurants/nearby') }}" class=" btn btn-warning">Go to nearbly Resturants</a>
                 <a href="{{ url('add_resturant') }}" class=" btn btn-warning">Go to add resturant</a>
+                <a href="{{ url('foods') }}" class=" btn btn-warning">Go to foods</a>
 
                 </div>
 

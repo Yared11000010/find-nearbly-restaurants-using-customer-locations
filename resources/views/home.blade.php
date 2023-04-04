@@ -9,7 +9,10 @@
                 <a href="{{ url('restaurants/nearby') }}" class=" btn btn-warning">Go to nearbly Resturants</a>
                 <a href="{{ url('add_resturant') }}" class=" btn btn-warning">Go to add resturant</a>
                 <a href="{{ url('foods') }}" class=" btn btn-warning">Go to foods</a>
-
+                <form method="POST" action="{{ route('logout_user') }}">
+                    @csrf
+                    <button class="btn btn-danger" type="submit">Logout</button>
+                </form>
                 </div>
 
                 <div class="card-body">

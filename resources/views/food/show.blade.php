@@ -14,8 +14,7 @@
         </div>
     </div>
     <h2>Similar Items</h2>
-    @if($similarFoods>0)
-
+    @if(count($similarFoods) > 0)
     <div class="row">
       @foreach($similarFoods as $similarFood)
           <div class="col-lg-3 bg-light ">

@@ -7,6 +7,7 @@
     <title>Food Orders</title>
 </head>
 <body>
+    <a href="{{ route('home') }}" class="btn btn-warning">Go To Home</a>
     <h2>New Food Order</h2>
     <div class="row">
         <div class="col-lg-4">
@@ -49,7 +50,7 @@
                             @if($foodOrder->delivery_boy_id)
                                 {{ $foodOrder->deliveryBoy->name }}
                             @else
-                                Not Assigned
+                               <p class=" text-danger"> Not Assigned</p>
                             @endif
                         </td>
                         <td>
@@ -61,8 +62,7 @@
                                         <select class="form-control" name="delivery_boy_id" required>
                                             <option value="">Select Delivery Boy</option>
                                             @foreach($deliveryBoys as $deliveryBoy)
-                                                <option @if(!empty($foodOrder->delivery_boy_id))
-                                                selected="" @endif  value="{{ $deliveryBoy->id }}" >{{ $deliveryBoy->name }}</option>
+                                                <option value="{{ $deliveryBoy->id }}" >{{ $deliveryBoy->name }}</option>
                                             @endforeach
                                         </select>
                                     </div>

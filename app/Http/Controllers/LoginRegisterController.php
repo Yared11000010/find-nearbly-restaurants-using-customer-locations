@@ -30,12 +30,16 @@ class LoginRegisterController extends Controller
             'name' => 'required',
             'email' => 'required|unique:users',
             'password' => 'required|confirmed',
+            'latitude'=>'required',
+            'longitude'=>'required',
         ]);
         
         $user = new User;
         $user->name = $validatedData['name'];
         $user->email = $validatedData['email'];
         $user->password = bcrypt($validatedData['password']);
+        $user->latitude=$validatedData['latitude'];
+        $user->longitude=$validatedData['longitude'];
         $user->save();
         
         Auth::login($user);

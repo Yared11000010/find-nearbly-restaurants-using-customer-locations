@@ -74,13 +74,31 @@
                                 @enderror
                              </div>
                              <div class="col-12">
+                                 <label for="latitude">Latitude:</label>
+                                 <input type="text" class="form-control" id="latitude" name="latitude" required readonly>
+                                 @error('latitude')
+                                 <p class=" text-danger">{{ $message }}</p>   
+                                 @enderror
+                              </div>
+                              <div class="col-12">
+                                 <label for="longitude">Longitude:</label>
+                                 <input type="text" class="form-control" id="longitude" name="longitude" readonly required>
+                                 @error('longitude')
+                                 <p class=" text-danger">{{ $message }}</p>   
+                                 @enderror
+                              </div>
+                              
+                             <div class="col-12">
                                 <div class="form-check">
                                    <input class="form-check-input" name="terms" type="checkbox" value="" id="acceptTerms" > <label class="form-check-label" for="acceptTerms">I agree and accept the <a href="#">terms and conditions</a></label>
                                    <div class="invalid-feedback">You must agree before submitting.</div>
                                 </div>
                              </div>
-                             <div class="col-12"> <button class="btn btn-primary w-100" type="submit">Create Account</button></div>
-                            
+                             <div class="col-12">
+                             <button type="button" class=" btn btn-warning w-100" onclick="getLocation()">Get Current Location</button>
+                             </div>
+                             <div class="col-12"> <button class="btn btn-primary w-100" id="saveLocationButton" type="submit">Create Account</button></div>
+
                           </form>
                        </div>
                     </div>
@@ -90,6 +108,40 @@
 
        </section>
     </div>
-
+    <script>
+      function getLocation() {
+          if (navigator.geolocation) {
+            var result = window.confirm("Do you want to allow this website to access your location?");
+               if (result) {
+                     navigator.geolocation.getCurrentPosition(showPosition, showError);
+               }
+          } else {
+              alert("Geolocation is not supported by this browser.");
+          }
+      }
+      
+      function showPosition(position) {
+          document.getElementById("latitude").value = position.coords.latitude;
+          document.getElementById("longitude").value = position.coords.longitude;
+          document.getElementById("saveLocationButton").disabled = false;
+      }
+      
+      function showError(error) {
+          switch(error.code) {
+              case error.PERMISSION_DENIED:
+                  alert("User denied the request for Geolocation.");
+                  break;
+              case error.POSITION_UNAVAILABLE:
+                  alert("Location information is unavailable.");
+                  break;
+              case error.TIMEOUT:
+                  alert("The request to get user location timed out.");
+                  break;
+              case error.UNKNOWN_ERROR:
+                  alert("An unknown error occurred.");
+                  break;
+          }
+      }
+      </script>
  </main>
   @endsection

@@ -40,12 +40,6 @@ class RestaurantController extends Controller
         $latitude=Auth()->user()->latitude;
         $longitude=Auth()->user()->latitude;
         
-        
-        // $latitude = 8.5414095;
-        // $longitude = 39.2687893;
-//         $latitude =$request->input('latitude');
-//         $longitude = $request->input('longitude');
-// dd($longitude);
         $radius=3611;
         $restaurants = Restaurant::selectRaw("id, name, address, latitude, longitude,
                      ( 3956 * acos( cos( radians(?) ) *
@@ -60,12 +54,7 @@ class RestaurantController extends Controller
         ->limit(20)
         ->get();
         
-        // Retrieve the nearest restaurants
-        // $restaurants = Restaurant::select(DB::raw('*, ( 6371 * acos( cos( radians(40.6591158) ) * cos( radians( latitude ) ) * cos( radians( longitude ) - radians(-73.7841042,14) ) + sin( radians(40.6591158) ) * sin( radians( latitude ) ) ) ) AS distance'))
-        //     ->having('distance','<',1)
-        //     ->orderBy('distance','asc')
-        //     ->get();
-        // Return the nearest restaurants view with the restaurants variable
-        return view('nearest-restaurants',compact('restaurants'));
+    
+        return view('home',compact('restaurants'));
     }
 }

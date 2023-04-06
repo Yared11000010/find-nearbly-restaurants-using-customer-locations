@@ -19,16 +19,18 @@ use Illuminate\Support\Facades\Auth;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('loginandregister.login_register');
 });
 
 Auth::routes();
 
+//for protect DDOS attack 
 Route::middleware(['auth','throttle:3,1'])->group(function(){
    
    
 
 });
+
 //routing for resturant
 Route::get('add_resturant',[RestaurantController::class,'create'])->name('addresturant');
 Route::post('store_resturant',[RestaurantController::class,'addresturant'])->name('store_resturant');
@@ -43,7 +45,7 @@ Route::post('/logout_user', [LoginRegisterController::class,'logout'])->name('lo
 //for Foods
 Route::get('/foods/{id}', [FoodController::class, 'show'])->name('foods.show');
 Route::get('/foods', [FoodController::class, 'index'])->name('foods.index');
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/home', [RestaurantController::class, 'getNearestRestaurants'])->name('home');
 
 //for OTP 
 Route::get('sendSMS', [App\Http\Controllers\TwilioSMSController::class, 'index']);
